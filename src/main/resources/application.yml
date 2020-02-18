@@ -1,0 +1,8 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  mvc:
+    date-format: yyyy-MM-dd
+
+server:
+  port: 8887
