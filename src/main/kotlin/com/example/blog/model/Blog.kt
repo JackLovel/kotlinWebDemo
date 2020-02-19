@@ -7,9 +7,7 @@ import java.util.Date;
 @Entity
 @Table(name = "t_blog")
 class Blog(
-        @Id
-        @GeneratedValue
-        var id: Long,
+        @Id @GeneratedValue var id: Long? = null,
         var title: String,
         var content: String,
         var firstPicture: String,

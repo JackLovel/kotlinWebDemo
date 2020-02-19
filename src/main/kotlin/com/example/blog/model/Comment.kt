@@ -7,9 +7,7 @@ import kotlin.collections.ArrayList
 @Entity
 @Table(name ="t_comment")
 class Comment (
-        @Id
-        @GeneratedValue
-        var id: Long,
+        @Id @GeneratedValue var id: Long? = null,
         var nickname : String,
         var email : String,
         var content : String,
