@@ -3,6 +3,16 @@ spring:
     mode: HTML
   mvc:
     date-format: yyyy-MM-dd
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/demo1?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 server:
   port: 8887

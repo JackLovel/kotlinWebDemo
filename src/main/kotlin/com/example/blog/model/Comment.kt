@@ -1,0 +1,25 @@
+package com.example.blog.model
+
+import java.util.*
+import javax.persistence.*
+import kotlin.collections.ArrayList
+
+@Entity
+@Table(name ="t_comment")
+class Comment (
+        @Id
+        @GeneratedValue
+        var id: Long,
+        var nickname : String,
+        var email : String,
+        var content : String,
+        var avatar : String,
+        @Temporal(TemporalType.TIMESTAMP)
+        var createTime: Date,
+
+        @ManyToOne
+        var blog : Blog,
+        @OneToMany(mappedBy = "parentComment")
+        var replyComments : List<Comment> = ArrayList(),
+        @ManyToOne
+        var parentComment : Comment)
