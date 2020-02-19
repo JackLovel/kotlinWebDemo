@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "t_type")
 class Type(
         @Id @GeneratedValue var id: Long? = null,
-        var name : String,
+        var name : String = "",
         @OneToMany(mappedBy = "type")
         var blogs : List<Blog> = ArrayList()
 )

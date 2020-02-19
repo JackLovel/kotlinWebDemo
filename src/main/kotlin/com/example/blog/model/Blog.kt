@@ -8,22 +8,22 @@ import java.util.Date;
 @Table(name = "t_blog")
 class Blog(
         @Id @GeneratedValue var id: Long? = null,
-        var title: String,
-        var content: String,
-        var firstPicture: String,
-        var flag: String,
-        var views: Int,
-        var appreciation: Boolean,
-        var shareStatement: Boolean,
-        var commentabled: Boolean,
-        var published: Boolean,
-        var recommend: Boolean,
+        var title: String = "",
+        var content: String = "",
+        var firstPicture: String = "",
+        var flag: String = "",
+        var views: Int = 0,
+        var appreciation: Boolean = false,
+        var shareStatement: Boolean = false,
+        var commentabled: Boolean = false,
+        var published: Boolean = false,
+        var recommend: Boolean = false,
 
         @Temporal(TemporalType.TIMESTAMP)
-        var createTime: Date,
+        var createTime: Date = Date(),
 
         @Temporal(TemporalType.TIMESTAMP)
-        var updateTime: Date,
+        var updateTime: Date = Date(),
 
         @ManyToOne
         var type: Type,

@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "t_tag")
 data class Tag(
         @Id @GeneratedValue var id: Long? = null,
-        var name : String,
+        var name : String = "",
         @ManyToMany(mappedBy = "tags")
         var blogs : List<Blog> = ArrayList()
 )

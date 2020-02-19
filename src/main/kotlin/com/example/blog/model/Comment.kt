@@ -8,12 +8,12 @@ import kotlin.collections.ArrayList
 @Table(name ="t_comment")
 class Comment (
         @Id @GeneratedValue var id: Long? = null,
-        var nickname : String,
-        var email : String,
-        var content : String,
-        var avatar : String,
+        var nickname : String = "",
+        var email : String = "",
+        var content : String = "",
+        var avatar : String = "",
         @Temporal(TemporalType.TIMESTAMP)
-        var createTime: Date,
+        var createTime: Date = Date(),
 
         @ManyToOne
         var blog : Blog,
