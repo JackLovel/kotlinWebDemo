@@ -1,5 +1,6 @@
 package com.example.blog.controller.admin
 
+import com.example.blog.model.Type
 import com.example.blog.service.TypeService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.BindResult;
@@ -25,8 +26,25 @@ class TypeController {
     @GetMapping("/types")
     fun types(@PageableDefault(size = 3, sort = ["id"], direction = Sort.Direction.DESC)
               pageable : Pageable, model : Model) : String {
-        model.addAttribute("page", typeService.listType(pageable))
+         model.addAttribute("page", typeService.listType(pageable))
 
         return "admin/types"
+    }
+
+    @GetMapping("/types/input")
+    fun input() : String {
+        return "admin/types-input"
+    }
+
+    @PostMapping("/types")
+    fun post(type : Type) : String {
+        val t : Type = typeService.saveType(type)
+        if (t == null) {
+            //
+        } else {
+            //
+        }
+
+        return "redirect:/admin/types"
     }
 }
