@@ -1,6 +1,9 @@
 spring:
   thymeleaf:
+    prefix: classpath:/templates/
     mode: HTML
+    cache: false
+    encoding: UTF-8
   mvc:
     date-format: yyyy-MM-dd
   datasource:

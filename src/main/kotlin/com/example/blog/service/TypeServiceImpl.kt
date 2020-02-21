@@ -32,7 +32,7 @@ class TypeServiceImpl : TypeService {
 
     @Transactional
     override fun updateType(id: Long, type: Type): Type {
-        var t = typeRepository.findById(id).get()
+        var t : Type = typeRepository.findById(id).get()
 
         if (t == null) {
             throw NotFoundException("不存在该类型")
@@ -44,5 +44,9 @@ class TypeServiceImpl : TypeService {
     @Transactional
     override fun deleteType(id: Long) {
         typeRepository.deleteById(id)
+    }
+
+    override fun getTypeByName(name: String): Type {
+        return typeRepository.findByName(name)
     }
 }

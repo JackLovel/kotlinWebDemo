@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
   <link rel="stylesheet" href="../../static/css/me.css">
+  <link rel="stylesheet" href="../../static/css/animate.css">
   <title>分类管理</title>
 </head>
 
@@ -74,11 +75,11 @@
       <tr>
         <!--                        page.totalPages：如果只有一页的话，就不显示 上一页 和 下一页-->
         <th colspan="6">
-          <div class="ui mini pagination menu">
+          <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
             <!--                                如果不是第一页，就不显示 上一页-->
-            <a th:href="@{/admin/types(page=${page.number}-1)}" class="item">上一页</a>
+            <a th:href="@{/admin/types(page=${page.number}-1)}" class="item" th:unless="${page.first}">上一页</a>
             <!--                                    如果不是最后一页，就不显示 下一页-->
-            <a th:href="@{/admin/types(page=${page.number}+1)}" class="item">下一页</a>
+            <a th:href="@{/admin/types(page=${page.number}+1)}" class="item" th:unless="${page.last}">下一页</a>
           </div>
           <a href="#" th:href="@{/admin/types/input}" class="ui mini right floated teal basic button">新增</a>
         </th>

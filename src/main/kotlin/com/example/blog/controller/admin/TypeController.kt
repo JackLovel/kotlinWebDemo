@@ -2,19 +2,19 @@ package com.example.blog.controller.admin
 
 import com.example.blog.model.Type
 import com.example.blog.service.TypeService
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import javax.validation.Valid
 
 @Controller
 @RequestMapping("/admin")
@@ -32,19 +32,61 @@ class TypeController {
     }
 
     @GetMapping("/types/input")
-    fun input() : String {
+    fun input(model: Model) : String {
+        model.addAttribute("type", Type())
+        return "admin/types-input"
+    }
+
+    @GetMapping("/types/{id}/input")
+    fun editInput(@PathVariable id : Long, model: Model) : String {
+        model.addAttribute("type", typeService.getType(id))
         return "admin/types-input"
     }
 
     @PostMapping("/types")
-    fun post(type : Type) : String {
-        val t : Type = typeService.saveType(type)
-        if (t == null) {
-            //
-        } else {
-            //
+    fun post(@Valid type : Type, result : BindingResult, attributes: RedirectAttributes) : String {
+        var type1 : Type = typeService.getTypeByName(type.name)
+        if (type1 != null) {
+            result.rejectValue("name", "nameError", "不能重复添加")
         }
 
+        if (result.hasErrors()) {
+            return "admin/types-input"
+        }
+
+        val t : Type = typeService.saveType(type)
+        if (t == null) {
+            attributes.addFlashAttribute("message", "新增失败")
+        } else {
+            attributes.addFlashAttribute("message", "新增成功")
+        }
+
+        return "redirect:/admin/types"
+    }
+
+    @PostMapping("/types/{id}")
+    fun editPost(@Valid type: Type, result: BindingResult, @PathVariable id: Long, attributes: RedirectAttributes): String {
+        val type1 = typeService.getTypeByName(type.name)
+        if (type1 != null) {
+            result.rejectValue("name", "nameError", "不能重复添加分类")
+        }
+        if (result.hasErrors()) {
+            return "admin/types-input"
+        }
+        val t : Type = typeService.updateType(id, type)
+        if (t == null) {
+            attributes.addFlashAttribute("message", "更新失败")
+        } else {
+            attributes.addFlashAttribute("message", "更新成功")
+        }
+        return "redirect:/admin/types"
+    }
+
+
+    @GetMapping("/types/{id}/delete")
+    fun deletePost(@PathVariable id : Long, attributes: RedirectAttributes) : String{
+        typeService.deleteType(id)
+        attributes.addFlashAttribute("message", "删除成功")
         return "redirect:/admin/types"
     }
 }
