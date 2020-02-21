@@ -6,6 +6,7 @@
   <title>标签管理</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
   <link rel="stylesheet" href="../../static/css/me.css">
+  <link rel="stylesheet" href="../../static/css/animate.css">
 </head>
 <body>
 
@@ -61,12 +62,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="type,iterStat : ${page.content}">
+          <tr th:each="tag,iterStat : ${page.content}">
             <td th:text="${iterStat.count}">1</td>
-            <td th:text="${type.name}">刻意练习清单</td>
+            <td th:text="${tag.name}">刻意练习清单</td>
             <td>
-              <a href="#" th:href="@{/admin/tags/{id}/input(id=${type.id})}" class="ui mini teal basic button">编辑</a>
-              <a href="#" th:href="@{/admin/tags/{id}/delete(id=${type.id})}" class="ui mini red basic button">删除</a>
+              <a href="#" th:href="@{/admin/tags/{id}/input(id=${tag.id})}" class="ui mini teal basic button">编辑</a>
+              <a href="#" th:href="@{/admin/tags/{id}/delete(id=${tag.id})}" class="ui mini red basic button">删除</a>
             </td>
           </tr>
         </tbody>

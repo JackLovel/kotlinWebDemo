@@ -35,8 +35,9 @@ class TypeServiceImpl : TypeService {
         var t : Type = typeRepository.findById(id).get()
 
         if (t == null) {
-            throw NotFoundException("不存在该类型")
+            throw Exception("不存在该类型")
         }
+
         BeanUtils.copyProperties(type, t)
         return typeRepository.save(t)
     }
@@ -46,6 +47,7 @@ class TypeServiceImpl : TypeService {
         typeRepository.deleteById(id)
     }
 
+    @Transactional
     override fun getTypeByName(name: String): Type {
         return typeRepository.findByName(name)
     }

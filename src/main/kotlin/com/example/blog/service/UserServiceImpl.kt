@@ -14,7 +14,6 @@ class UserServiceImpl : UserService {
 
     override fun checkUser(username: String, password: String): User {
 
-        var user: User = userRepository.findByUsernameAndPassword(username, Md5Util.code(password).toString())
-        return user
+        return userRepository.findByUsernameAndPassword(username, Md5Util.code(password).toString())
     }
 }

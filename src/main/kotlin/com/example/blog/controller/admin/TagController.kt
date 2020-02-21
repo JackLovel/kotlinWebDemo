@@ -1,7 +1,8 @@
 package com.example.blog.controller.admin
 
+import com.example.blog.model.Tag
 import com.example.blog.model.Type
-import com.example.blog.service.TypeService
+import com.example.blog.service.TagService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -18,66 +19,66 @@ import javax.validation.Valid
 
 @Controller
 @RequestMapping("/admin")
-class TypeController {
+class TagController {
 
     @Autowired
-    lateinit var typeService: TypeService
+    lateinit var tagService: TagService
 
-    @GetMapping("/types")
-    fun types(@PageableDefault(size = 3, sort = ["id"], direction = Sort.Direction.DESC)
+    @GetMapping("/tags")
+    fun tags(@PageableDefault(size = 3, sort = ["id"], direction = Sort.Direction.DESC)
               pageable : Pageable, model : Model) : String {
-        model.addAttribute("page", typeService.listType(pageable))
+        model.addAttribute("page", tagService.listTag(pageable))
 
-        return "admin/types"
+        return "admin/tags"
     }
 
-    @GetMapping("/types/input")
+    @GetMapping("/tags/input")
     fun input(model: Model) : String {
-        model.addAttribute("type", Type())
-        return "admin/types-input"
+        model.addAttribute("tag", Tag())
+        return "admin/tags-input"
     }
 
-    @PostMapping("/types")
-    fun post(type : Type) : String {
-        var t : Type = typeService.saveType(type)
+    @PostMapping("/tags")
+    fun post(tag : Tag) : String {
+        var t : Tag = tagService.saveTag(tag)
         if (t == null) {
 
         } else {
 
         }
 
-        return "redirect:/admin/types"
+        return "redirect:/admin/tags"
     }
 
+    @GetMapping("/tags/{id}/input")
+    fun editInput(@PathVariable id : Long, model: Model) : String {
+        model.addAttribute("tag", tagService.getTag(id))
+        return "admin/tags-input"
+    }
 
-
-    @PostMapping("/types/{id}")
-    fun editPost(@Valid type: Type,
-                 result: BindingResult,
-                 @PathVariable id: Long,
-                 attributes: RedirectAttributes): String {
-        val type1 = typeService.getTypeByName(type.name)
-        if (type1 != null) {
+    @PostMapping("/tags/{id}")
+    fun editPost(@Valid tag: Tag, result: BindingResult, @PathVariable id: Long, attributes: RedirectAttributes): String {
+        val tag1 = tagService.getTagByName(tag.name)
+        if (tag1 != null) {
             result.rejectValue("name", "nameError", "不能重复添加分类")
         }
         if (result.hasErrors()) {
-            return "admin/types-input"
+            return "admin/tags-input"
         }
-        val t : Type = typeService.updateType(id, type)
+        val t : Tag = tagService.updateTag(id, tag)
         if (t == null) {
             attributes.addFlashAttribute("message", "更新失败")
         } else {
             attributes.addFlashAttribute("message", "更新成功")
         }
-
-        return "redirect:/admin/types"
+        return "redirect:/admin/tags"
     }
 
 
-    @GetMapping("/types/{id}/delete")
+    @GetMapping("/tags/{id}/delete")
     fun deletePost(@PathVariable id : Long, attributes: RedirectAttributes) : String{
-        typeService.deleteType(id)
+        tagService.deleteTag(id)
         attributes.addFlashAttribute("message", "删除成功")
-        return "redirect:/admin/types"
+        return "redirect:/admin/tags"
     }
 }

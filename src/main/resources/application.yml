@@ -1,8 +1,6 @@
 spring:
   thymeleaf:
-    prefix: classpath:/templates/
     mode: HTML
-    cache: false
     encoding: UTF-8
   mvc:
     date-format: yyyy-MM-dd
@@ -14,7 +12,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto:  none # update
     show-sql: true
 
 server:

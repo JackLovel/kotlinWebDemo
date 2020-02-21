@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "t_tag")
-data class Tag(
+class Tag(
         @Id @GeneratedValue var id: Long? = null,
         var name : String = "",
         @ManyToMany(mappedBy = "tags")
