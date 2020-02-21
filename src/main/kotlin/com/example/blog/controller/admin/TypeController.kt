@@ -38,12 +38,21 @@ class TypeController {
     }
 
     @PostMapping("/types")
-    fun post(type : Type) : String {
-        var t : Type = typeService.saveType(type)
+    fun post(@Valid type : Type, result: BindingResult, attributes: RedirectAttributes) : String {
+//        val type1 : Type = typeService.getTypeByName(type.name) // 检查数据库里是否有相同的值
+//        if (type1 != null) {
+//            result.rejectValue("name", "nameError", "不能重复添加分类")
+//        }
+
+        // 后端不为空检验
+        if(result.hasErrors()) {
+            return "admin/types-input"
+        }
+        val t : Type = typeService.saveType(type)
         if (t == null) {
-
+            attributes.addFlashAttribute("message", "操作失败")
         } else {
-
+            attributes.addFlashAttribute("message", "操作成功")
         }
 
         return "redirect:/admin/types"
@@ -56,21 +65,7 @@ class TypeController {
                  result: BindingResult,
                  @PathVariable id: Long,
                  attributes: RedirectAttributes): String {
-        val type1 = typeService.getTypeByName(type.name)
-        if (type1 != null) {
-            result.rejectValue("name", "nameError", "不能重复添加分类")
-        }
-        if (result.hasErrors()) {
-            return "admin/types-input"
-        }
-        val t : Type = typeService.updateType(id, type)
-        if (t == null) {
-            attributes.addFlashAttribute("message", "更新失败")
-        } else {
-            attributes.addFlashAttribute("message", "更新成功")
-        }
-
-        return "redirect:/admin/types"
+        return ""
     }
 
 

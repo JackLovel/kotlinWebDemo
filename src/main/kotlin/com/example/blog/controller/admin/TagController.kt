@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.awt.Rectangle
 import javax.validation.Valid
 
 @Controller
@@ -39,12 +40,12 @@ class TagController {
     }
 
     @PostMapping("/tags")
-    fun post(tag : Tag) : String {
+    fun post(tag : Tag, attributes: RedirectAttributes) : String {
         var t : Tag = tagService.saveTag(tag)
         if (t == null) {
-
+            attributes.addFlashAttribute("message", "操作失败")
         } else {
-
+            attributes.addFlashAttribute("message", "操作成功")
         }
 
         return "redirect:/admin/tags"

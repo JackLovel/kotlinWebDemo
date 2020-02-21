@@ -47,7 +47,6 @@ class TypeServiceImpl : TypeService {
         typeRepository.deleteById(id)
     }
 
-    @Transactional
     override fun getTypeByName(name: String): Type {
         return typeRepository.findByName(name)
     }
