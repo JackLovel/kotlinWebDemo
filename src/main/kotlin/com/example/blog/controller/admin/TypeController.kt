@@ -25,37 +25,39 @@ class TypeController {
 
     @GetMapping("/types")
     fun types(@PageableDefault(size = 3, sort = ["id"], direction = Sort.Direction.DESC)
-              pageable : Pageable, model : Model) : String {
+              pageable: Pageable, model: Model): String {
         model.addAttribute("page", typeService.listType(pageable))
 
         return "admin/types"
     }
 
     @GetMapping("/types/input")
-    fun input(model: Model) : String {
+    fun input(model: Model): String {
         model.addAttribute("type", Type())
         return "admin/types-input"
     }
 
     @GetMapping("/types/{id}/input")
-    fun editInput(@PathVariable id : Long,
-              model: Model) : String {
+    fun editInput(@PathVariable id: Long,
+                  model: Model): String {
         model.addAttribute("type", typeService.getType(id))
         return "admin/types-input"
     }
 
     @PostMapping("/types")
-    fun post(@Valid type : Type, result: BindingResult, attributes: RedirectAttributes) : String {
+    fun post(@Valid type: Type,
+             result: BindingResult,
+             attributes: RedirectAttributes): String {
 //        val type1 : Type = typeService.getTypeByName(type.name) // 检查数据库里是否有相同的值
 //        if (type1 != null) {
 //            result.rejectValue("name", "nameError", "不能重复添加分类")
 //        }
 
         // 后端不为空检验
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "admin/types-input"
         }
-        val t : Type = typeService.saveType(type)
+        val t: Type = typeService.saveType(type)
         if (t == null) {
             attributes.addFlashAttribute("message", "新增失败")
         } else {
@@ -64,7 +66,6 @@ class TypeController {
 
         return "redirect:/admin/types"
     }
-
 
 
     @PostMapping("/types/{id}")
@@ -78,10 +79,10 @@ class TypeController {
 //        }
 
         // 后端不为空检验
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "admin/types-input"
         }
-        val t : Type = typeService.updateType(id, type)
+        val t: Type = typeService.updateType(id, type)
         if (t == null) {
             attributes.addFlashAttribute("message", "更新失败")
         } else {
@@ -93,7 +94,8 @@ class TypeController {
 
 
     @GetMapping("/types/{id}/delete")
-    fun deletePost(@PathVariable id : Long, attributes: RedirectAttributes) : String{
+    fun deletePost(@PathVariable id: Long,
+                   attributes: RedirectAttributes): String {
         typeService.deleteType(id)
         attributes.addFlashAttribute("message", "删除成功")
         return "redirect:/admin/types"
