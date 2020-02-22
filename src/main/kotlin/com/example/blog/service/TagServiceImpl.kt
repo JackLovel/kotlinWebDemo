@@ -50,7 +50,7 @@ class TagServiceImpl : TagService {
         tagRepository.deleteById(id)
     }
 
-    override fun getTagByName(name: String): Tag {
-        return tagRepository.findByName(name)
-    }
+//    override fun getTagByName(name: String): Tag {
+//        return tagRepository.findByName(name)
+//    }
 }
