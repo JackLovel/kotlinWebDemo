@@ -49,8 +49,4 @@ class TagServiceImpl : TagService {
     override fun deleteTag(id: Long) {
         tagRepository.deleteById(id)
     }
-
-//    override fun getTagByName(name: String): Tag {
-//        return tagRepository.findByName(name)
-//    }
 }

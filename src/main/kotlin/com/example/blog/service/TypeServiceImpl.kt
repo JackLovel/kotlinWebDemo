@@ -50,4 +50,8 @@ class TypeServiceImpl : TypeService {
     override fun getTypeByName(name: String): Type {
         return typeRepository.findByName(name)
     }
+
+    override fun listType(): List<Type> {
+        return typeRepository.findAll()
+    }
 }
