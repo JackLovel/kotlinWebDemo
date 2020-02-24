@@ -12,7 +12,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto:  none # update
+      ddl-auto:  none # update: 项目启动时，更新数据库字段
     show-sql: true
 
 server:

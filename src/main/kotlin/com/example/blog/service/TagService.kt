@@ -11,4 +11,5 @@ interface TagService {
     fun listTag(page : Pageable) : Page<Tag> // 分页
     fun updateTag(id : Long, tag : Tag) : Tag // 更新
     fun deleteTag(id : Long)
+    fun listTag() : List<Tag>
 }

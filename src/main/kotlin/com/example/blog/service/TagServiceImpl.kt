@@ -49,4 +49,9 @@ class TagServiceImpl : TagService {
     override fun deleteTag(id: Long) {
         tagRepository.deleteById(id)
     }
+
+    @Transactional
+    override fun listTag(): List<Tag> {
+        return tagRepository.findAll()
+    }
 }

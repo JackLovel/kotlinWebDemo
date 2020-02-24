@@ -26,12 +26,14 @@ class Blog(
         var updateTime: Date = Date(),
 
         @ManyToOne
-        var type: Type,
+        var type: Type? = null,
 
         @ManyToMany(cascade = [CascadeType.PERSIST])
         var tags: List<Tag> = ArrayList(),   // 多博客有多个标签
         @ManyToOne
-        var user: User,
+        var user: User? = null,
         @OneToMany(mappedBy = "blog")
-        var comments: List<Comment> = ArrayList()
+        var comments: List<Comment> = ArrayList(),
+        @Transient var tagIds : String = "",
+        var description : String = ""
 )
