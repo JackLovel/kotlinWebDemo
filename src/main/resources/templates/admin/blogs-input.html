@@ -12,7 +12,7 @@
 
 <body>
 <!-- 导航 -->
-<nav th:replace="admin/_fragments :: menu(1)" class="ui inverted segment m-padded-tb-mini m-shadow-small">
+<nav  th:replace="admin/_fragments :: menu(1)" class="ui inverted segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">管理后台</h2>
@@ -83,9 +83,7 @@
                             <i class="dropdown icon"></i>
                             <div class="default text">分类</div>
                             <div class="menu">
-                                <div th:each="type: ${types}" class="item" data-value="1" th:data-value="${type.id}"
-                                     th:text="${type.name}">错误日志
-                                </div>
+                                <div th:each="type: ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
                             </div>
                         </div>
                     </div>
@@ -99,9 +97,7 @@
                             <i class="dropdown icon"></i>
                             <div class="default text">标签</div>
                             <div class="menu">
-                                <div th:each="tag : ${tags}" class="item" data-value="1" th:data-value="${tag.id}"
-                                     th:text="${tag.name}">Java
-                                </div>
+                                <div th:each="tag : ${tags}" class="item" data-value="1" th:data-value="${tag.id}" th:text="${tag.name}">Java</div>
                             </div>
                         </div>
                     </div>
@@ -121,29 +117,25 @@
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="recommend" name="recommend" checked th:checked="*{recommend}"
-                               class="hidden">
+                        <input type="checkbox" id="recommend" name="recommend" checked th:checked="*{recommend}" class="hidden">
                         <label for="recommend">推荐</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="shareStatement" name="shareStatement" th:checked="*{shareStatement}"
-                               class="hidden">
+                        <input type="checkbox" id="shareStatement" name="shareStatement" th:checked="*{shareStatement}" class="hidden">
                         <label for="shareStatement">转载声明</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}"
-                               class="hidden">
+                        <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}" class="hidden">
                         <label for="appreciation">赞赏</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="commentabled" name="commentabled" th:checked="*{commentabled}"
-                               class="hidden">
+                        <input type="checkbox" id="commentabled" name="commentabled" th:checked="*{commentabled}" class="hidden">
                         <label for="commentabled">评论</label>
                     </div>
                 </div>
@@ -162,7 +154,7 @@
     </div>
 </div>
 
-<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+<footer  th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
         <div class="ui inverted divided stackable grid">
             <div class="three wide column">
@@ -192,7 +184,7 @@
             </div>
         </div>
         <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 JackLovel Designed by sakona</p>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright  © 2020 JackLovel Designed by sakona</p>
     </div>
 </footer>
 <th:block th:replace="admin/_fragments :: script">
@@ -212,8 +204,7 @@
                 path    : "/lib/editormd/lib/"
             });
         });
-
-</script>
+    </script>
 <script>
         $('.menu.toggle').click(function() {
             $('.m-item').toggleClass('m-mobile-hide');
@@ -271,8 +262,7 @@
                 }
             }
         })
-
-</script>
+    </script>
 </body>
 
 </html>
