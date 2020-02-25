@@ -12,4 +12,5 @@ interface TagService {
     fun updateTag(id : Long, tag : Tag) : Tag // 更新
     fun deleteTag(id : Long)
     fun listTag() : List<Tag>
+    fun listTag(ids : String) : List<Tag>
 }

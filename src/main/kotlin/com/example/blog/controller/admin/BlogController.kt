@@ -1,6 +1,7 @@
 package com.example.blog.controller.admin
 
 import com.example.blog.model.Blog
+import com.example.blog.model.User
 import com.example.blog.query.BlogQuery
 import com.example.blog.service.BlogService
 import com.example.blog.service.TagService
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/admin")
@@ -53,6 +56,21 @@ class BlogController {
         model.addAttribute("tags", tagService.listTag())
         model.addAttribute("blog", Blog())
         return INPUT
+    }
+
+    @PostMapping("/blogs")
+    fun post(blog : Blog, session: HttpSession, attributes: RedirectAttributes) : String{
+        blog.user = session.getAttribute("user") as User
+        blog.type = typeService.getType(blog.type.id)
+        blog.tags = tagService.listTag(blog.tagIds)
+
+        var b = blogService.saveBlog(blog)
+        if (b == null) { // 返回对象如果为空
+            attributes.addFlashAttribute("message", "新增失败")
+        } else {
+            attributes.addFlashAttribute("message", "新增成功")
+        }
+        return REDIRECT_LIST
     }
 }
 

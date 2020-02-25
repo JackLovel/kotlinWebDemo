@@ -2,7 +2,6 @@ package com.example.blog.service
 
 import com.example.blog.dao.TypeRepository
 import com.example.blog.model.Type
-import javassist.NotFoundException
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -21,8 +20,12 @@ class TypeServiceImpl : TypeService {
     }
 
     @Transactional
-    override fun getType(id: Long): Type {
-        return typeRepository.findById(id).get()
+    override fun getType(id: Long?): Type {
+        if (id != null) {
+            return typeRepository.findById(id).get()
+        }
+
+        return Type()
     }
 
     @Transactional // 事务

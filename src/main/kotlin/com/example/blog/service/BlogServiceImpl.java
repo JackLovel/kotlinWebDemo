@@ -55,11 +55,17 @@ public class BlogServiceImpl  implements BlogService {
         }, pageable);
     }
 
+    @Transactional
     @Override
     public Blog saveBlog(Blog blog) {
+        // 初始化
+        blog.setCreateTime(new Date());
+        blog.setUpdateTime(new Date());
+        blog.setViews(0);
         return blogRepository.save(blog);
     }
 
+    @Transactional
     @Override
     public Blog updateBlog(long id,Blog blog) {
         Blog b = blogRepository.findById(id).get();
@@ -71,6 +77,7 @@ public class BlogServiceImpl  implements BlogService {
         return blogRepository.save(b);
     }
 
+    @Transactional
     @Override
     public void deleteBlog(long id) {
         blogRepository.deleteById(id);

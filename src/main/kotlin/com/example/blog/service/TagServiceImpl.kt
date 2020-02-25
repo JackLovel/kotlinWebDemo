@@ -8,7 +8,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import kotlin.Exception
+import java.util.*
+
 
 @Service
 class TagServiceImpl : TagService {
@@ -54,4 +55,26 @@ class TagServiceImpl : TagService {
     override fun listTag(): List<Tag> {
         return tagRepository.findAll()
     }
+
+    @Transactional
+    override fun listTag(ids: String): List<Tag> { //"1,2,3"
+        return tagRepository.findAllById(convertToList(ids)!!)
+    }
+
+//    override fun listTag(ids: String): List<Tag> {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
+
+    private fun convertToList(ids: String?): List<Long>? {
+        val list: MutableList<Long> = ArrayList()
+        if ("" != ids && ids != null) {
+            val idarray = ids.split(",".toRegex()).toTypedArray()
+            for (i in idarray.indices) {
+                list.add(idarray[i].toLong())
+            }
+        }
+        return list
+    }
+
+
 }

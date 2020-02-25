@@ -9,6 +9,9 @@ import java.util.Date;
 class Blog(
         @Id @GeneratedValue var id: Long? = null,
         var title: String = "",
+        // 大字段类型
+        @Basic(fetch = FetchType.LAZY)
+        @Lob
         var content: String = "",
         var firstPicture: String = "",
         var flag: String = "",
@@ -26,7 +29,7 @@ class Blog(
         var updateTime: Date = Date(),
 
         @ManyToOne
-        var type: Type? = null,
+        var type: Type = Type(),
 
         @ManyToMany(cascade = [CascadeType.PERSIST])
         var tags: List<Tag> = ArrayList(),   // 多博客有多个标签

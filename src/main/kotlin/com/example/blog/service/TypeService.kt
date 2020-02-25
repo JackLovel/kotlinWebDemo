@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable
 
 interface TypeService {
     fun saveType(type : Type) : Type // 保存
-    fun getType(id : Long) : Type // 查找
+    fun getType(id: Long?) : Type // 查找
     fun getTypeByName(name : String) : Type
     fun listType(pageable: Pageable) : Page<Type> // 分页
     fun listType() : List<Type>
