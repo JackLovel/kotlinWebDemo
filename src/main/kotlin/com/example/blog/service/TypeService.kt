@@ -10,6 +10,7 @@ interface TypeService {
     fun getTypeByName(name : String) : Type
     fun listType(pageable: Pageable) : Page<Type> // 分页
     fun listType() : List<Type>
+    fun listTypeTop(size : Int) : List<Type>
     fun updateType(id : Long, type : Type) : Type // 更新
     fun deleteType(id : Long)
 }

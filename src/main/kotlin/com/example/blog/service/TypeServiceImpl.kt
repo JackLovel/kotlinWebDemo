@@ -5,9 +5,12 @@ import com.example.blog.model.Type
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+
 
 @Service
 class TypeServiceImpl : TypeService {
@@ -57,4 +60,36 @@ class TypeServiceImpl : TypeService {
     override fun listType(): List<Type> {
         return typeRepository.findAll()
     }
+
+    // 获取排序
+    override fun listTypeTop(size: Int): List<Type> {
+        val order = Sort.Order(Sort.Direction.DESC, "blogs.size")
+        val pageable: Pageable = PageRequest.of(0, size, Sort.by(order))
+        return typeRepository.findTop(pageable)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

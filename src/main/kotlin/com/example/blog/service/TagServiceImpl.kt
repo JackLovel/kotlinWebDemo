@@ -5,7 +5,9 @@ import com.example.blog.model.Tag
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -61,13 +63,9 @@ class TagServiceImpl : TagService {
         return tagRepository.findAllById(convertToList(ids)!!)
     }
 
-//    override fun listTag(ids: String): List<Tag> {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
-
     private fun convertToList(ids: String?): List<Long>? {
         val list: MutableList<Long> = ArrayList()
-        if ("" != ids && ids != null) {
+        if (!ids.isNullOrEmpty()) {
             val idarray = ids.split(",".toRegex()).toTypedArray()
             for (i in idarray.indices) {
                 list.add(idarray[i].toLong())
@@ -76,5 +74,11 @@ class TagServiceImpl : TagService {
         return list
     }
 
-
+    override fun listTagTop(size: Int): List<Tag> {
+        val order = Sort.Order(Sort.Direction.DESC, "blogs.size")
+        val pageable: Pageable = PageRequest.of(0, size, Sort.by(order))
+        return tagRepository.findTop(pageable)
+    }
 }
+
+

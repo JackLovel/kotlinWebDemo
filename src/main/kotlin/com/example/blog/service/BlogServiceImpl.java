@@ -1,10 +1,12 @@
 package com.example.blog.service;
 
+import com.example.blog.util.MyBeanUtils;
 import com.example.blog.dao.BlogRepository;
 import com.example.blog.exception.NotFoundException;
 import com.example.blog.model.Blog;
 import com.example.blog.model.Type;
 import com.example.blog.query.BlogQuery;
+import com.example.blog.util.MyBeanUtils;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
@@ -57,11 +59,22 @@ public class BlogServiceImpl  implements BlogService {
 
     @Transactional
     @Override
+    public Page<Blog> listBlog(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Transactional
+    @Override
     public Blog saveBlog(Blog blog) {
-        // 初始化
-        blog.setCreateTime(new Date());
-        blog.setUpdateTime(new Date());
-        blog.setViews(0);
+        if (blog.getId() == null) {
+            // 初始化
+            blog.setCreateTime(new Date());
+            blog.setUpdateTime(new Date());
+            blog.setViews(0);
+        } else {
+            blog.setUpdateTime(new Date());
+        }
+
         return blogRepository.save(blog);
     }
 
@@ -73,8 +86,15 @@ public class BlogServiceImpl  implements BlogService {
             throw  new NotFoundException("该博客不存在");
         }
 
-        BeanUtils.copyProperties(b, blog);
+        BeanUtils.copyProperties(b, blog, MyBeanUtils.getNullPropertyNames(blog));
         return blogRepository.save(b);
+    }
+
+    @Override
+    public List<Blog> listRecommendBlogTop(int size) {
+        Sort.Order order = new Sort.Order(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(0, size, Sort.by(order));
+        return blogRepository.findTop(pageable);
     }
 
     @Transactional

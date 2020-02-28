@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
@@ -50,11 +51,22 @@ class BlogController {
         return "admin/blogs :: blogList"
     }
 
-    @GetMapping("/blogs/input")
-    fun input(model: Model): String {
+    fun setTypeAndTag(model: Model) {
         model.addAttribute("types", typeService.listType())
         model.addAttribute("tags", tagService.listTag())
+    }
+
+    @GetMapping("/blogs/input")
+    fun input(model: Model): String {
+        setTypeAndTag(model)
         model.addAttribute("blog", Blog())
+        return INPUT
+    }
+
+    @GetMapping("/blogs/{id}/input")
+    fun editInput(@PathVariable id: Long, model: Model): String {
+        setTypeAndTag(model)
+        model.addAttribute("blog", blogService.getBlog(id))
         return INPUT
     }
 
@@ -64,12 +76,27 @@ class BlogController {
         blog.type = typeService.getType(blog.type.id)
         blog.tags = tagService.listTag(blog.tagIds)
 
-        var b = blogService.saveBlog(blog)
+        var b : Blog;
+        if (blog.id == null) {
+            b = blogService.saveBlog(blog)
+        } else {
+            b = blogService.updateBlog(blog.id!!, blog)
+        }
+
         if (b == null) { // 返回对象如果为空
             attributes.addFlashAttribute("message", "新增失败")
         } else {
             attributes.addFlashAttribute("message", "新增成功")
         }
+        return REDIRECT_LIST
+    }
+
+    @GetMapping("/blogs/{id}/delete")
+    fun deletePost(@PathVariable id: Long,
+                   attributes: RedirectAttributes): String {
+        blogService.deleteBlog(id)
+
+        attributes.addFlashAttribute("message", "删除成功")
         return REDIRECT_LIST
     }
 }
