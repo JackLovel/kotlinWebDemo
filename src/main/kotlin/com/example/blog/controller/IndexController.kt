@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class IndexController {
@@ -33,9 +35,47 @@ class IndexController {
         return "index";
     }
 
+
+    @PostMapping("/search")
+    fun search(@PageableDefault(size = 8, sort = ["updateTime"], direction = Sort.Direction.DESC)
+              pageable: Pageable,  @RequestParam query : String, model: Model) : String {
+        model.addAttribute("page", blogService.listBlog("%$query%", pageable))
+        model.addAttribute("query", query)
+        return "search"
+    }
+
     @GetMapping("/blog/{id}")
     fun blog(@PathVariable id: Long, model: Model) : String {
 //        model.addAttribute("blog", "")
         return "blog";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

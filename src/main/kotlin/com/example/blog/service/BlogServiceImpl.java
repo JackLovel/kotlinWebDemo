@@ -102,4 +102,9 @@ public class BlogServiceImpl  implements BlogService {
     public void deleteBlog(long id) {
         blogRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Blog> listBlog(String query, Pageable pageable) {
+        return blogRepository.findByQuery(query, pageable);
+    }
 }
