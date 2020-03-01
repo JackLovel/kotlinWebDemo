@@ -1,5 +1,6 @@
 package com.example.blog.service;
 
+import com.example.blog.util.MarkdownUtils;
 import com.example.blog.util.MyBeanUtils;
 import com.example.blog.dao.BlogRepository;
 import com.example.blog.exception.NotFoundException;
@@ -107,4 +108,31 @@ public class BlogServiceImpl  implements BlogService {
     public Page<Blog> listBlog(String query, Pageable pageable) {
         return blogRepository.findByQuery(query, pageable);
     }
+
+    @Override
+    public Blog getAndConvert(long id) {
+        Blog blog  = blogRepository.findById(id).get();
+        if (blog == null) {
+            throw new NotFoundException("该博客不存在");
+        }
+
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog, b);
+        String content = blog.getContent();
+        blog.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+        return blog;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

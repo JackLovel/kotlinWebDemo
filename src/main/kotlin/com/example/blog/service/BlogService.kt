@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable
 
 interface BlogService {
     fun getBlog(id: Long): Blog
+    fun getAndConvert(id: Long) : Blog
     fun listBlog(pageable: Pageable, blog: BlogQuery): Page<Blog>
     fun listBlog(pageable: Pageable): Page<Blog>
     fun listBlog(query: String, pageable: Pageable): Page<Blog>
